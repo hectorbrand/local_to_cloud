@@ -9,9 +9,9 @@ function Dashboard() {
     const [precio, setPrecio] = useState('');
     const navigate = useNavigate(); // 2. Inicializamos la función de navegación
 
-    // 1. Cargar productos desde MySQL
+    // 1. Cargar productos desde MySQL (URL de Railway)
     const cargarProductos = () => {
-        axios.get('http://localhost:8081/productos')
+        axios.get('https://localtocloud-production.up.railway.app/productos')
             .then(res => setProductos(res.data))
             .catch(err => console.log("Error al cargar:", err));
     };
@@ -20,7 +20,7 @@ function Dashboard() {
         cargarProductos();
     }, []);
 
-    // 2. Guardar nuevo producto
+    // 2. Guardar nuevo producto (URL de Railway)
     const guardarProducto = (e) => {
         e.preventDefault();
         if (!nombre || !cantidad || !precio) {
@@ -28,7 +28,7 @@ function Dashboard() {
             return;
         }
 
-        axios.post('http://localhost:8081/crear', { 
+        axios.post('https://localtocloud-production.up.railway.app/crear', { 
             nombre: nombre, 
             cantidad: cantidad, 
             precio: precio 
@@ -43,7 +43,7 @@ function Dashboard() {
         .catch(err => alert("❌ No se pudo guardar el producto."));
     };
 
-    // 3. ENTREGAR PRODUCTO (Actualizado con Persona y Área) 📉📝
+    // 3. ENTREGAR PRODUCTO (Actualizado para Producción en Railway) 📉📝
     const entregarProducto = (id, cantidadActual, nombreProducto) => {
         const inputCantidad = window.prompt(`¿Cuántas unidades de "${nombreProducto}" vas a entregar? (Disponibles: ${cantidadActual})`);
         if (inputCantidad === null || inputCantidad === "") return;
@@ -66,7 +66,7 @@ function Dashboard() {
             return;
         }
 
-        axios.put(`http://localhost:8081/entregar/${id}`, { 
+        axios.put(`https://localtocloud-production.up.railway.app/entregar/${id}`, { 
             cantidadARestar: cantidadARestar,
             persona_recibe: persona,
             area: area,
@@ -83,10 +83,10 @@ function Dashboard() {
         .catch(err => console.log("Error en entrega:", err));
     };
 
-    // 4. Eliminar producto
+    // 4. Eliminar producto (URL de Railway)
     const eliminarProducto = (id) => {
         if (window.confirm("¿Estás seguro de eliminar este producto?")) {
-            axios.delete(`http://localhost:8081/eliminar/${id}`)
+            axios.delete(`https://localtocloud-production.up.railway.app/eliminar/${id}`)
                 .then(res => {
                     if (res.data.success) {
                         alert("🗑️ Producto eliminado");
@@ -174,7 +174,7 @@ const styles = {
     contenedor: { padding: '20px', fontFamily: 'Arial, sans-serif', backgroundColor: '#f4f7f6', minHeight: '100vh' },
     header: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#343a40', color: 'white', padding: '10px 20px', borderRadius: '8px', marginBottom: '20px' },
     titulo: { margin: 0, fontSize: '20px' },
-    contenedorBotones: { display: 'flex', gap: '10px' }, // Alinea botones a la derecha
+    contenedorBotones: { display: 'flex', gap: '10px' }, 
     botonHistorial: { backgroundColor: '#17a2b8', color: 'white', border: 'none', padding: '8px 15px', borderRadius: '5px', cursor: 'pointer', fontWeight: 'bold' },
     subtitulo: { borderBottom: '3px solid #007bff', paddingBottom: '5px', color: '#333', marginBottom: '15px' },
     seccionFormulario: { backgroundColor: 'white', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)', marginBottom: '30px', maxWidth: '500px' },

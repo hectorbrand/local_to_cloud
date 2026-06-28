@@ -16,7 +16,8 @@ function Login() {
       return;
     }
 
-    axios.post('http://localhost:8081/login', { 
+    // URL modificada para producción en Railway
+    axios.post('https://localtocloud-production.up.railway.app/login', { 
       usuarioIngresado: usuario, 
       claveIngresada: clave 
     })
@@ -43,7 +44,8 @@ function Login() {
       return;
     }
 
-    axios.post('http://localhost:8081/registro', { 
+    // URL modificada para producción en Railway
+    axios.post('https://localtocloud-production.up.railway.app/registro', { 
       nuevoUsuario: usuario, 
       nuevaClave: clave,
       rol: 'usuario' // Por defecto lo creamos como rol usuario
@@ -168,9 +170,8 @@ const styles = {
     cursor: 'pointer',
     marginTop: '10px'
   },
-  // ESTILO PARA EL NUEVO BOTÓN
   botonRegistrar: {
-    backgroundColor: '#28a745', // Color verde
+    backgroundColor: '#28a745', 
     color: 'white',
     padding: '12px',
     borderRadius: '6px',
