@@ -6,12 +6,13 @@ const app = express();
 app.use(express.json()); 
 app.use(cors());         
 
-// --- CONFIGURACIÓN DE LA BASE DE DATOS (MODIFICADO A POOL PARA ESTABILIDAD) ---
+// --- CONFIGURACIÓN DE LA BASE DE DATOS (ADAPTADA PARA PRODUCCIÓN / RAILWAY) ---
 const db = mysql.createPool({
-    host: 'localhost',
-    user: 'root',          
-    password: '',          
-    database: 'inventario',
+    host: process.env.MYSQLHOST || 'localhost',
+    user: process.env.MYSQLUSER || 'root',          
+    password: process.env.MYSQLPASSWORD || '',          
+    database: process.env.MYSQLDATABASE || 'inventario',
+    port: process.env.MYSQLPORT || 3306,
     waitForConnections: true,
     connectionLimit: 10,
     queueLimit: 0
@@ -112,7 +113,7 @@ app.put('/entregar/:id', (req, res) => {
     });
 });
 
-// --- NUEVO: OBTENER EL HISTORIAL DE ENTREGAS ---
+// --- OBTENER EL HISTORIAL DE ENTREGAS ---
 app.get('/historial', (req, res) => {
     const sql = "SELECT * FROM entregas ORDER BY fecha_entrega DESC"; 
     db.query(sql, (err, data) => {
@@ -134,7 +135,8 @@ app.delete('/eliminar/:id', (req, res) => {
     });
 });
 
-// --- ARRANQUE DEL SERVIDOR ---
-app.listen(8081, () => {
-    console.log("🚀 Servidor del Backend corriendo en http://localhost:8081");
+// --- ARRANQUE DEL SERVIDOR (PUERTO DINÁMICO REQUERIDO POR RAILWAY) ---
+const PORT = process.env.PORT || 8081;
+app.listen(PORT, () => {
+    console.log(`🚀 Servidor del Backend corriendo en el puerto ${PORT}`);
 });
