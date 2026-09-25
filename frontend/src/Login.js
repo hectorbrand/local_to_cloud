@@ -17,7 +17,7 @@ function Login() {
     }
 
     // URL modificada para producción en Railway
-    axios.post('https://localtocloud-production.up.railway.app/login', { 
+    axios.post('http://localhost:8081/login', { 
       usuarioIngresado: usuario, 
       claveIngresada: clave 
     })
@@ -45,7 +45,7 @@ function Login() {
     }
 
     // URL modificada para producción en Railway
-    axios.post('https://localtocloud-production.up.railway.app/registro', { 
+    axios.post('http://localhost:8081/registro', { 
       nuevoUsuario: usuario, 
       nuevaClave: clave,
       rol: 'usuario' // Por defecto lo creamos como rol usuario
