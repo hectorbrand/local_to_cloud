@@ -11,7 +11,7 @@ function Dashboard() {
 
     // 1. Cargar productos desde MySQL (URL de Railway)
     const cargarProductos = () => {
-        axios.get('https://localtocloud-production.up.railway.app/productos')
+        axios.get('http://localhost:8081/productos')
             .then(res => setProductos(res.data))
             .catch(err => console.log("Error al cargar:", err));
     };
@@ -28,7 +28,7 @@ function Dashboard() {
             return;
         }
 
-        axios.post('https://localtocloud-production.up.railway.app/crear', { 
+        axios.post('http://localhost:8081/crear', { 
             nombre: nombre, 
             cantidad: cantidad, 
             precio: precio 
@@ -66,7 +66,7 @@ function Dashboard() {
             return;
         }
 
-        axios.put(`https://localtocloud-production.up.railway.app/entregar/${id}`, { 
+        axios.put(`http://localhost:8081/entregar/${id}`, { 
             cantidadARestar: cantidadARestar,
             persona_recibe: persona,
             area: area,
@@ -86,7 +86,7 @@ function Dashboard() {
     // 4. Eliminar producto (URL de Railway)
     const eliminarProducto = (id) => {
         if (window.confirm("¿Estás seguro de eliminar este producto?")) {
-            axios.delete(`https://localtocloud-production.up.railway.app/eliminar/${id}`)
+            axios.delete(`http://localhost:8081/eliminar/${id}`)
                 .then(res => {
                     if (res.data.success) {
                         alert("🗑️ Producto eliminado");

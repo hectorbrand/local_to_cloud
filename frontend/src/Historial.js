@@ -6,9 +6,9 @@ function Historial() {
     const [entregas, setEntregas] = useState([]);
     const navigate = useNavigate();
 
-    // 1. Cargar el historial desde el servidor (URL de Railway)
+    // 1. Cargar el historial desde el servidor local
     const cargarHistorial = () => {
-        axios.get('https://localtocloud-production.up.railway.app/historial')
+        axios.get('http://localhost:8081/historial')
             .then(res => {
                 setEntregas(res.data);
             })
